@@ -122,3 +122,22 @@ window.addEventListener("DOMContentLoaded", playUnmutedSanchoAudio);
 document.addEventListener("pointerdown", playUnmutedSanchoAudio, { passive: true });
 document.addEventListener("touchstart", playUnmutedSanchoAudio, { passive: true });
 document.addEventListener("keydown", playUnmutedSanchoAudio);
+
+(() => {
+  const applySubGlow = () => {
+    const heading = Array.from(document.querySelectorAll("h1, h2, h3, div, p, span"))
+      .find((el) => el.textContent && el.textContent.trim() === "SANCHO");
+    if (!heading) return;
+
+    let sibling = heading.nextElementSibling;
+    while (sibling) {
+      if (sibling.tagName !== "CANVAS" && sibling.tagName !== "AUDIO") {
+        sibling.classList.add("sancho-subglow");
+      }
+      sibling = sibling.nextElementSibling;
+    }
+  };
+
+  window.addEventListener("DOMContentLoaded", applySubGlow);
+  applySubGlow();
+})();
