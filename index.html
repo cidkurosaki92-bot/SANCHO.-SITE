@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SANCHO</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="matrix-bg" aria-hidden="true"></canvas>
+
+  <main class="terminal-shell">
+    <pre id="sancho-skull" class="skull-art" aria-label="SANCHO Skull">
+          .-""""-.
+         /  .-.  \
+        |  /   \  |
+        |  \.-./  |
+         \  '-'  /
+       .-'"""""""'-.
+      /  .-------.  \
+     /  /  .---.  \  \
+    |  |  / ( ) \  |  |
+    |  |  \ '-' /  |  |
+     \  \  '---'  /  /
+      \  '-------'  /
+       '-._______.-'
+          | | | |
+          |_|_|_|
+    </pre>
+
+    <h1 class="brand-title">SANCHO</h1>
+    <div id="output" class="output"></div>
+
+    <form id="cmd-form" class="cmd-row" autocomplete="off">
+      <span class="prompt">sancho@root:~$</span>
+      <input id="cmd-input" type="text" placeholder="type help, members, matrix, cls..." autofocus />
+    </form>
+  </main>
+
+  <audio id="bgm" src="anghell.mp3" autoplay loop preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
