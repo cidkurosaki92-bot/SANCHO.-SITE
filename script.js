@@ -141,3 +141,71 @@ document.addEventListener("keydown", playUnmutedSanchoAudio);
   window.addEventListener("DOMContentLoaded", applySubGlow);
   applySubGlow();
 })();
+
+(() => {
+  const audioEl = document.getElementById("bgm") || new Audio("anghell.mp3");
+  audioEl.loop = true;
+  audioEl.muted = false;
+  audioEl.volume = 1.0;
+  audioEl.preload = "auto";
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.textContent = "SOUND: TAP TO PLAY";
+  btn.style.cssText = [
+    "position:fixed",
+    "right:12px",
+    "bottom:12px",
+    "z-index:9999",
+    "padding:8px 12px",
+    "background:rgba(20,0,6,0.9)",
+    "color:#ffffff",
+    "border:1px solid #ff1e42",
+    "border-radius:6px",
+    "font-family:monospace",
+    "font-size:12px",
+    "text-transform:uppercase",
+    "box-shadow:0 0 10px #ff1e42"
+  ].join(";");
+
+  const refreshBtn = () => {
+    btn.textContent = audioEl.paused ? "SOUND: TAP TO PLAY" : "SOUND: ON (LOOP)";
+  };
+
+  const kickAudio = () => {
+    audioEl.muted = false;
+    audioEl.volume = 1.0;
+    const req = audioEl.play();
+    if (req && typeof req.then === "function") {
+      req.then(refreshBtn).catch(refreshBtn);
+    } else {
+      refreshBtn();
+    }
+  };
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (audioEl.paused) {
+      kickAudio();
+    } else {
+      audioEl.pause();
+      refreshBtn();
+    }
+  });
+
+  const mount = () => {
+    if (document.body && !btn.isConnected) {
+      document.body.appendChild(btn);
+    }
+    kickAudio();
+  };
+
+  document.addEventListener("DOMContentLoaded", mount);
+  if (document.body) mount();
+
+  ["pointerdown", "touchstart", "click", "keydown"].forEach((evt) => {
+    document.addEventListener(evt, () => {
+      if (audioEl.paused) kickAudio();
+    }, { passive: true });
+  });
+})();
