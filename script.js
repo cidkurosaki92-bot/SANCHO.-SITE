@@ -98,3 +98,27 @@ resizeMatrix();
 drawMatrix();
 startAudioAutoplay();
 printLine("SANCHO ONLINE // RED-WHITE MATRIX ACTIVE");
+
+const sanchoAudio = document.getElementById("bgAudio") || new Audio("anghell.mp3");
+sanchoAudio.loop = true;
+sanchoAudio.muted = false;
+sanchoAudio.volume = 1.0;
+sanchoAudio.preload = "auto";
+
+function playUnmutedSanchoAudio() {
+  sanchoAudio.muted = false;
+  sanchoAudio.volume = 1.0;
+  const p = sanchoAudio.play();
+  if (p && typeof p.then === "function") {
+    p.then(() => {
+      document.removeEventListener("pointerdown", playUnmutedSanchoAudio);
+      document.removeEventListener("touchstart", playUnmutedSanchoAudio);
+      document.removeEventListener("keydown", playUnmutedSanchoAudio);
+    }).catch(() => {});
+  }
+}
+
+window.addEventListener("DOMContentLoaded", playUnmutedSanchoAudio);
+document.addEventListener("pointerdown", playUnmutedSanchoAudio, { passive: true });
+document.addEventListener("touchstart", playUnmutedSanchoAudio, { passive: true });
+document.addEventListener("keydown", playUnmutedSanchoAudio);
